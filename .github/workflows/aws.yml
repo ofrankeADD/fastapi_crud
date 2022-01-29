@@ -71,4 +71,4 @@ jobs:
         run: |
           python -m pytest
           coverage run -m pytest
-          coverage-badge -f -o coverage.svg
+          coverage-badge -f -o ./coverage.svg
