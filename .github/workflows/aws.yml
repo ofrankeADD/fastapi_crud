@@ -43,12 +43,12 @@ jobs:
         run: |
           # Build a docker container and push it to ECR
           #docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          #docker-compose build
-          docker-compose up -d --build
+          docker-compose build
+          #docker-compose up -d --build
           #docker-compose exec web pytest
-          docker-compose down --volumes
+          #docker-compose down --volumes
           docker tag fastapi_crud_web $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker rmi $(docker image ls | grep "^<none>" | awk '{print $3}'
+          #docker rmi $(docker image ls | grep "^<none>" | awk '{print $3}'
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           
