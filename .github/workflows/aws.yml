@@ -86,7 +86,7 @@ jobs:
           PROJECT_SERVICE: fastapi_crud_web
         run: |
           # Build a docker container and push it to ECR
-          docker-compose build
+          ECR_REGISTRY=$ECR_REGISTRY ECR_REPOSITORY=$ECR_REPOSITORY IMAGE_TAG=$IMAGE_TAG docker-compose build
           docker-compose push
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           
