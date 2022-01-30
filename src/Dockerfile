@@ -20,6 +20,3 @@ COPY . /code/src/app
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8432", "--proxy-headers", "--ssl-keyfile", "./key.pem", "--ssl-certfile", "./cert.pem", "--reload"]
 
-# to get cert.pem and key.pem:
-# mkcert -install && mkcert -CAROOT && mkcert localhost 127.0.0.1 ::1
-# mv xyzcert.pem cert.pem && mv xyzkey.pem key.pem
