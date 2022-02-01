@@ -1,8 +1,3 @@
-def test_ping(test_app):
-    response = test_app.get("/ping")
-    assert response.status_code == 200
-    assert response.json() == {"ping": "pong!"}
-
 def test_items(test_app):#(item_id: int, q: Optional[str] = None):
     response = test_app.get("/items/42")
     assert response.status_code == 200

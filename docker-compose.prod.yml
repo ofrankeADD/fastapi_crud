@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  web:
+    build: ./src
+#    image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+    ports:
+      - "8432:8432"
+#    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.fastapi.rule=Host(`ec2.compute.amazonaws.com`)"
+      - "traefik.http.routers.fastapi.tls=true"
+      - "traefik.http.routers.fastapi.tls.certresolver=letsencrypt"
+    volumes:
+      - ./src/:/code/src/app/
+
+  traefik:
+    image: traefik:latest
+    ports:
+      - "80:80"
+      - "443:443"
+#    restart: always
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./src/traefik/traefik.prod.toml:/etc/traefik/traefik.toml"
+      - "traefik-public-certificates:/certificates"
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.http.routers.dashboard.rule=Host(`dashboard-fastapi-traefik.your-domain.com`) && (PathPrefix(`/`)"
+#      - "traefik.http.routers.dashboard.tls=true"
+#      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
+#      - "traefik.http.routers.dashboard.service=api@internal"
+#      - "traefik.http.routers.dashboard.middlewares=auth"
+#      - "traefik.http.middlewares.auth.basicauth.users=testuser:$$apr1$$jIKW.bdS$$eKXe4Lxjgy/rH65wP1iQe1"
+###echo $(htpasswd -nb testuser password) | sed -e s/\\$/\\$\\$/g#
+
+volumes:
+  traefik-public-certificates:

@@ -1,8 +1,11 @@
 from typing import Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
+from app.api import ping
 
 app = FastAPI()
+
+app.include_router(ping.router)
 
 
 class Item(BaseModel):
@@ -14,10 +17,6 @@ class Item(BaseModel):
 @app.get("/")
 def read_root():
     return {"Hello": "World HTTPS on the fly high!"}
-
-@app.get("/ping")
-def pong():
-    return {"ping": "pong!"}
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Optional[str] = None):
