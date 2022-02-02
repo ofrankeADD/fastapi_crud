@@ -3,6 +3,11 @@ pydantic==1.9.0
 uvicorn>=0.17.0,<0.18.0
 gunicorn==20.1.0
 
+databases[postgresql]==0.5.5
+SQLAlchemy==1.4.31
+asyncpg==0.25.0
+psycopg2-binary==2.9.3
+
 pytest==6.2.5
 requests==2.27.1
 coverage-badge==1.1.0
