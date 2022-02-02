@@ -40,8 +40,8 @@ jobs:
           docker-compose -f docker-compose.dev.yml exec -T web coverage-badge -f -o /code/src/coverage.svg
           
           docker create -it --name dummy $(docker images | awk '{print $1}' | awk 'NR==2') bash
-          docker cp dummy:/code/src/coverage.svg .
-          docker cp dummy:/code/src/.coverage .
+          docker cp dummy:./coverage.svg .
+          docker cp dummy:./.coverage .
           docker rm -f dummy
           
           docker-compose -f docker-compose.dev.yml down --volumes
