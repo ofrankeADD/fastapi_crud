@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r /code/src/requirements.txt
+          pip install -r ./src/requirements.txt
           
       - name: Run unit tests using pytest
         run: |
@@ -88,6 +88,7 @@ jobs:
           
           docker create -it --name dummy $(docker images | awk '{print $1}' | awk 'NR==2') bash
           docker cp dummy:/code/src/coverage.svg .
+          docker cp dummy:/code/src/.coverage .
           docker rm -f dummy
           
           docker-compose push
