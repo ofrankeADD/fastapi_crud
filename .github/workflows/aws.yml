@@ -89,7 +89,7 @@ jobs:
 #        shell: bash
 #        run: echo "##[set-output name=release_tag;]$(echo ${GITHUB_REF#refs/tags/})"
 #        id: extract_tag
-        
+
       - name: Build, tag, and push image to AWS ECR
         id: build-image
         env:
@@ -102,14 +102,13 @@ jobs:
         run: |
           # Build a docker container and push it to ECR
           ECR_REGISTRY=$ECR_REGISTRY ECR_REPOSITORY=$ECR_REPOSITORY IMAGE_TAG=$IMAGE_TAG docker-compose build
+          docker-compose push
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           
 #          docker create -it --name dummy $(docker images | awk '{print $1}' | awk 'NR==2') bash
 #          docker cp dummy:/code/src/coverage.svg .
 #          docker cp dummy:/code/src/.coverage .
 #          docker rm -f dummy
-          
-          docker-compose push
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           
       - name: Logout from AWS ECR
         if: always()
