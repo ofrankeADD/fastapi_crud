@@ -7,7 +7,7 @@ ENV PYTHONUNBUFFERED 1
 
 COPY ./requirements.txt /code/src/requirements.txt
 
-RUN pip install --no-cache-dir -r /code/src/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /code/src/requirements.txt
 
 #RUN set -eux \
 #    && apk add --no-cache --virtual .build-deps build-base \
