@@ -2,6 +2,8 @@ version: "3.9"
 services:
   web:
     build: ./src
+#    command: |
+#      sh -c 'while !</dev/tcp/db/5432; do sleep 1; done;'
 #    expose:
 #      - 8432
     ports:
@@ -23,6 +25,8 @@ services:
 #      - 5432
     ports:
       - 5432:5432
+    depends_on:
+      - traefik
     environment:
       - POSTGRES_USER=fastapi_pg_usr
       - POSTGRES_PASSWORD=fastapi_pg_pw
@@ -35,6 +39,8 @@ services:
     ports:
       - "80:80"
 #      - "8080:8080"
+#    depends_on:
+#      - db
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./src/traefik/traefik.dev.toml:/etc/traefik/traefik.toml"

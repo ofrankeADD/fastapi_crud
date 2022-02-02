@@ -7,7 +7,7 @@ ENV PYTHONUNBUFFERED 1
 
 COPY ./requirements.txt /code/src/requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r /code/src/requirements.txt
+RUN pip install --no-cache-dir -r /code/src/requirements.txt
 
 #RUN set -eux \
 #    && apk add --no-cache --virtual .build-deps build-base \
@@ -18,8 +18,11 @@ RUN pip install --no-cache-dir --upgrade -r /code/src/requirements.txt
 
 COPY . /code/src/
 
-RUN coverage run -m pytest
-RUN coverage-badge -f -o /code/src/coverage.svg
+#ARG DATABASE_URL
+#ENV DATABASE_URL "postgresql://fastapi_pg_usr:fastapi_pg_pw@db/fastapi_pg_db"
+#RUN export DATABASE_URL="postgresql://fastapi_pg_usr:fastapi_pg_pw@db/fastapi_pg_db"
+#RUN coverage run -m pytest
+#RUN coverage-badge -f -o /code/src/coverage.svg
 
 #CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8432", "--proxy-headers", "--ssl-keyfile", "./key.pem", "--ssl-certfile", "./cert.pem", "--reload"]
 

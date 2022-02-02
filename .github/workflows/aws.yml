@@ -32,10 +32,27 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r ./src/requirements.txt
           
-      - name: Run unit tests using pytest
-        run: |
-          coverage run -m pytest
-          coverage-badge -f -o ./coverage.svg
+      - name: Build dev image and run unit tests using pytest
+        run : |
+          docker-compose -f docker-compose.dev.yml up -d --build
+#          docker-compose -f docker-compose.dev.yml exec web pytest .
+          docker-compose -f docker-compose.dev.yml exec web coverage run -m pytest .
+          docker-compose -f docker-compose.dev.yml exec web coverage-badge -f -o /code/src/coverage.svg
+          
+          docker create -it --name dummy $(docker images | awk '{print $1}' | awk 'NR==2') bash
+          docker cp dummy:/code/src/coverage.svg .
+          docker cp dummy:/code/src/.coverage .
+          docker rm -f dummy
+          
+          docker-compose -f docker-compose.dev.yml down --volumes
+          
+          docker container rm -f $(docker ps -a | grep -v "^CONTAINER" | awk '{print $1}')
+          docker rmi $(docker image ls | grep "^<none>" | awk '{print $3}')
+          
+#      - name: Run unit tests using pytest
+#        run: |
+#          coverage run -m pytest
+#          coverage-badge -f -o ./coverage.svg
 
 #  lint:
 #    name: Run Hadolint for Dockerfile
@@ -86,10 +103,10 @@ jobs:
           # Build a docker container and push it to ECR
           ECR_REGISTRY=$ECR_REGISTRY ECR_REPOSITORY=$ECR_REPOSITORY IMAGE_TAG=$IMAGE_TAG docker-compose build
           
-          docker create -it --name dummy $(docker images | awk '{print $1}' | awk 'NR==2') bash
-          docker cp dummy:/code/src/coverage.svg .
-          docker cp dummy:/code/src/.coverage .
-          docker rm -f dummy
+#          docker create -it --name dummy $(docker images | awk '{print $1}' | awk 'NR==2') bash
+#          docker cp dummy:/code/src/coverage.svg .
+#          docker cp dummy:/code/src/.coverage .
+#          docker rm -f dummy
           
           docker-compose push
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
