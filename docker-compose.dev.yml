@@ -6,17 +6,38 @@ services:
 #      - 8432
     ports:
       - "8432:8432"
+    depends_on:
+      - traefik
+      - db
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.fastapi.rule=Host(`fastapi.localhost`)"
+    environment:
+      - DATABASE_URL=postgresql://fastapi_pg_usr:fastapi_pg_pw@db/fastapi_pg_db
     volumes:
-      - ./src/:/code/src/app/
+      - ./src/:/code/src/
 
+  db:
+    image: postgres:14-alpine
+#    expose:
+#      - 5432
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=fastapi_pg_usr
+      - POSTGRES_PASSWORD=fastapi_pg_pw
+      - POSTGRES_DB=fastapi_pg_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+      
   traefik:
     image: traefik:latest
     ports:
       - "80:80"
-      - "8080:8080"
+#      - "8080:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./src/traefik/traefik.dev.toml:/etc/traefik/traefik.toml"
+
+volumes:
+  postgres_data:

@@ -27,10 +27,10 @@ jobs:
         with:
           python-version: 3.9
           
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r ./src/requirements.txt
+#      - name: Install dependencies
+#        run: |
+#          python -m pip install --upgrade pip
+#          pip install -r /code/src/requirements.txt
           
       - name: Run unit tests using pytest
         run: |
@@ -79,12 +79,17 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.AWS_REPO_NAME }}
           IMAGE_TAG: latest
-          #IMAGE_TAG: ${{ github.sha }}
-          #IMAGE_TAG: ${{ steps.extract_tag.outputs.release_tag }}
-          PROJECT_SERVICE: fastapi_crud_web
+          ###IMAGE_TAG: ${{ github.sha }}
+          ##IMAGE_TAG: ${{ steps.extract_tag.outputs.release_tag }}
+          #PROJECT_SERVICE: fastapi_crud_web
         run: |
           # Build a docker container and push it to ECR
           ECR_REGISTRY=$ECR_REGISTRY ECR_REPOSITORY=$ECR_REPOSITORY IMAGE_TAG=$IMAGE_TAG docker-compose build
+          
+          docker create -it --name dummy $(docker images | awk '{print $1}' | awk 'NR==2') bash
+          docker cp dummy:/code/src/coverage.svg .
+          docker rm -f dummy
+          
           docker-compose push
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           

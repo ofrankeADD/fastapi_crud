@@ -1,13 +1,13 @@
 FROM python:3.9-alpine
 
-WORKDIR /code/src/app
+WORKDIR /code/src/
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-COPY ./requirements.txt /code/src/app/requirements.txt
+COPY ./requirements.txt /code/src/requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r /code/src/app/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /code/src/requirements.txt
 
 #RUN set -eux \
 #    && apk add --no-cache --virtual .build-deps build-base \
@@ -16,7 +16,10 @@ RUN pip install --no-cache-dir --upgrade -r /code/src/app/requirements.txt
 #    && pip install -r /code/src/app/requirements.txt \
 #    && rm -rf /root/.cache/pip
 
-COPY . /code/src/app
+COPY . /code/src/
+
+CMD ["coverage", "run", "-m", "pytest"]
+CMD ["coverage-badge", "-f", "-o", "/code/src/coverage.svg"]
 
 #CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8432", "--proxy-headers", "--ssl-keyfile", "./key.pem", "--ssl-certfile", "./cert.pem", "--reload"]
 
