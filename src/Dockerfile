@@ -18,8 +18,8 @@ RUN pip install --no-cache-dir --upgrade -r /code/src/requirements.txt
 
 COPY . /code/src/
 
-CMD ["coverage", "run", "-m", "pytest"]
-CMD ["coverage-badge", "-f", "-o", "/code/src/coverage.svg"]
+RUN coverage run -m pytest
+RUN coverage-badge -f -o /code/src/coverage.svg
 
 #CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8432", "--proxy-headers", "--ssl-keyfile", "./key.pem", "--ssl-certfile", "./cert.pem", "--reload"]
 
