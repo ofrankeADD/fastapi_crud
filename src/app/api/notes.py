@@ -12,8 +12,8 @@ async def create_note(note_payload: NoteSchema):
 
     response_object = {
         "id": note_id,
-        "title": payload.title,
-        "description": payload.description,
+        "title": note_payload.title,
+        "description": note_payload.description,
     }
     alternative_response_object = {**note_payload.dict(), "id": note_id}
     

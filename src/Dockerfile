@@ -26,5 +26,7 @@ COPY . /code/src/
 
 #CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8432", "--proxy-headers", "--ssl-keyfile", "./key.pem", "--ssl-certfile", "./cert.pem", "--reload"]
 
+#CMD sh -c 'while !</dev/tcp/db/5432; do sleep 1; done; gunicorn app.main:app --bind 0.0.0.0:8432 --reload --workers 2 --worker-class uvicorn.workers.UvicornWorker'
+
 CMD ["gunicorn", "app.main:app", "--bind", "0.0.0.0:8432", "--reload", "--workers", "2", "--worker-class", "uvicorn.workers.UvicornWorker"]
 
