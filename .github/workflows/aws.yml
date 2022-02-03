@@ -34,7 +34,6 @@ jobs:
 
       - name: Build dev image and run unit tests using pytest
         run : |
-          docker container rm -f $(docker ps -a | grep -v "^CONTAINER" | awk '{print $1}')
           docker rmi $(docker image ls | grep "^<none>" | awk '{print $3}')
           docker-compose -f docker-compose.dev.yml up -d --build
           docker-compose -f docker-compose.dev.yml exec -T web pytest .
@@ -49,6 +48,7 @@ jobs:
 #          docker cp dummy:./.coverage .
 #          docker rm -f dummy
           
+          #docker container rm -f $(docker ps -a | grep -v "^CONTAINER" | awk '{print $1}')
           
           
 #      - name: Run unit tests using pytest
