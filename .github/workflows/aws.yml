@@ -35,9 +35,10 @@ jobs:
       - name: Build dev image and run unit tests using pytest
         run : |
           docker-compose -f docker-compose.dev.yml up -d --build
-          docker-compose -f docker-compose.dev.yml exec -T web coverage run -m pytest .
-          docker-compose -f docker-compose.dev.yml exec -T web coverage-badge -f -o /code/src/coverage.svg
+          docker-compose -f docker-compose.dev.yml exec -T web pytest .
           docker-compose -f docker-compose.dev.yml down --volumes
+#          docker-compose -f docker-compose.dev.yml exec -T web coverage run -m pytest .
+#          docker-compose -f docker-compose.dev.yml exec -T web coverage-badge -f -o /code/src/coverage.svg
 #          pwd
 #          docker images
 #          docker ps -a

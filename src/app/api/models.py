@@ -8,3 +8,9 @@ class NoteSchema(BaseModel):
 
 class NoteDB(NoteSchema):
     id: int
+
+
+class Item(BaseModel):
+    name: str
+    price: float
+    is_offer: Optional[bool] = None

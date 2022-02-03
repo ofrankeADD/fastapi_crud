@@ -3,6 +3,7 @@ from fastapi import FastAPI
 
 from app.api import notes, ping
 from app.db import engine, database, metadata
+from app.api.models import Item
 
 
 metadata.create_all(engine)
@@ -24,12 +25,6 @@ app.include_router(ping.router)
 app.include_router(notes.router, prefix="/notes", tags=["notes"])
 
 
-from pydantic import BaseModel
-
-class Item(BaseModel):
-    name: str
-    price: float
-    is_offer: Optional[bool] = None
 
 @app.get("/")
 def read_root():
