@@ -37,24 +37,6 @@ jobs:
           docker-compose -f docker-compose.dev.yml up -d --build
           docker-compose -f docker-compose.dev.yml exec -T web pytest .
           docker-compose -f docker-compose.dev.yml down --volumes
-#          docker-compose -f docker-compose.dev.yml exec -T web coverage run -m pytest .
-#          docker-compose -f docker-compose.dev.yml exec -T web coverage-badge -f -o /code/src/coverage.svg
-#          pwd
-#          docker images
-#          docker ps -a
-#          docker create -t --name dummy $(docker images | awk '{print $1}' | awk 'NR==2') bash
-#          docker cp dummy:./coverage.svg .
-#          docker cp dummy:./.coverage .
-#          docker rm -f dummy
-          
-          #docker container rm -f $(docker ps -a | grep -v "^CONTAINER" | awk '{print $1}')
-          #docker rmi $(docker image ls | grep "^<none>" | awk '{print $3}')
-          
-          
-#      - name: Run unit tests using pytest
-#        run: |
-#          coverage run -m pytest
-#          coverage-badge -f -o ./coverage.svg
 #
 #  lint:
 #    name: Run Hadolint for Dockerfile
@@ -107,16 +89,8 @@ jobs:
           docker-compose push
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           
-#          docker create -it --name dummy $(docker images | awk '{print $1}' | awk 'NR==2') bash
-#          docker cp dummy:/code/src/coverage.svg .
-#          docker cp dummy:/code/src/.coverage .
-#          docker rm -f dummy
-          
       - name: Logout from AWS ECR
         if: always()
         run: docker logout $ECR_REGISTRY
-          
-          #docker-compose up --exit-code-from web --build
-          #docker tag $PROJECT_SERVICE $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          #docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
 

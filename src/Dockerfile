@@ -7,24 +7,9 @@ ENV PYTHONUNBUFFERED 1
 
 COPY ./requirements.txt /code/src/requirements.txt
 
-RUN pip install --no-cache-dir -r /code/src/requirements.txt
-
-#RUN set -eux \
-#    && apk add --no-cache --virtual .build-deps build-base \
-#        libressl-dev libffi-dev gcc musl-dev python3-dev \
-#    && pip install --upgrade pip setuptools wheel \
-#    && pip install -r /code/src/app/requirements.txt \
-#    && rm -rf /root/.cache/pip
+RUN pip install -r /code/src/requirements.txt
 
 COPY . /code/src/
-
-#ARG DATABASE_URL
-#ENV DATABASE_URL "postgresql://fastapi_pg_usr:fastapi_pg_pw@db/fastapi_pg_db"
-#RUN export DATABASE_URL="postgresql://fastapi_pg_usr:fastapi_pg_pw@db/fastapi_pg_db"
-#RUN coverage run -m pytest
-#RUN coverage-badge -f -o /code/src/coverage.svg
-
-#CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8432", "--proxy-headers", "--ssl-keyfile", "./key.pem", "--ssl-certfile", "./cert.pem", "--reload"]
 
 #CMD sh -c 'while !</dev/tcp/db/5432; do sleep 1; done; gunicorn app.main:app --bind 0.0.0.0:8432 --reload --workers 2 --worker-class uvicorn.workers.UvicornWorker'
 

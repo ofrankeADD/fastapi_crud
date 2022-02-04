@@ -2,10 +2,6 @@ version: "3.9"
 services:
   web:
     build: ./src
-#    command: |
-#      sh -c 'while !</dev/tcp/db/5432; do sleep 1; done;'
-#    expose:
-#      - 8432
     ports:
       - "8432:8432"
     depends_on:
@@ -21,12 +17,8 @@ services:
 
   db:
     image: postgres:14.1-alpine
-#    expose:
-#      - 5432
     ports:
       - 5432:5432
-#    depends_on:
-#      - traefik
     environment:
       - POSTGRES_USER=fastapi_pg_usr
       - POSTGRES_PASSWORD=fastapi_pg_pw
