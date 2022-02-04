@@ -10,9 +10,3 @@ For the CI pipeline I am using Docker, Pytest, Github Actions and AWS ECR.
 For the web API I am using FastAPI, Traefik, Postgres and SQLAlchemy.
 
 The goal is to implement the standard CRUD routes as GET, POST, PUT and DELETE for a notes table.
-
-Achieved:
-- POST route
-
-TODO:
-- GET, PUT, DELETE routes
