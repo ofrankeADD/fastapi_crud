@@ -2,6 +2,13 @@ from app.api.models import NoteSchema
 from app.db import notes, database
 
 
+#    database.fetch_all(query)
+#    database.fetch_one(query)
+#    database.iterate(query)
+#    database.execute(query)
+#    database.execute_many(query)
+
+
 async def post(note_payload: NoteSchema):
     query = notes.insert().values(title=note_payload.title, description=note_payload.description)
     return await database.execute(query=query)
@@ -18,7 +25,7 @@ async def get_all():
 
 
 async def put(id: int, note_payload: NoteSchema):
-    query = notes.update().where(id == notes.c.id).values(title=note_payload.title, description=note_payload.description).returning(notes.c.id)
+    query = notes.update().values(title=note_payload.title, description=note_payload.description).where(id == notes.c.id).returning(notes.c.id)
     return await database.execute(query=query)
 
 

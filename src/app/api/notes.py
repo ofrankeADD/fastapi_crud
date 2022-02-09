@@ -30,8 +30,8 @@ async def read_one_note(id: int):
     
     response = {
         "id": id,
-        "title": note.title,
-        "description": note.description
+        "title": note['title'],
+        "description": note['description']
     }
     #response = {**note.dict(), "id": note_id}
     return response
