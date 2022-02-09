@@ -33,6 +33,9 @@ def test_read_one_note_invalid(test_app, monkeypatch):
     assert response.status_code == 404
     assert response.json()["detail"] == "Note with id 9 not found!"
     
+    response = test_app.get("/notes/0/")
+    assert response.status_code == 422
+    
 
 def test_read_one_note(test_app, monkeypatch):
     test_data = {"id": 1, "title": "something", "description": "something else"}
@@ -80,6 +83,9 @@ def test_update_note(test_app, monkeypatch):
     assert response.status_code == 200
     assert response.json() == test_data
     
+    response = test_app.get("/notes/0/")
+    assert response.status_code == 422
+    
 
 def test_delete_note(test_app, monkeypatch):
     test_data = {"title": "something", "description": "something else", "id": 1}
@@ -97,3 +103,6 @@ def test_delete_note(test_app, monkeypatch):
     response = test_app.delete("/notes/1/")
     assert response.status_code == 200
     assert response.json() == None
+    
+    response = test_app.get("/notes/0/")
+    assert response.status_code == 422
