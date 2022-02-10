@@ -1,7 +1,7 @@
 version: "3.9"
 services:
-  web:
-    build: ./src
+  backend:
+    build: ./src/backend
     ports:
       - "8432:8432"
     depends_on:
@@ -13,12 +13,12 @@ services:
     environment:
       - DATABASE_URL=postgresql://fastapi_pg_usr:fastapi_pg_pw@db/fastapi_pg_db
     volumes:
-      - ./src/:/code/src/
+      - ./src/backend/:/code/src/
 
   db:
     image: postgres:14.1-alpine
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       - POSTGRES_USER=fastapi_pg_usr
       - POSTGRES_PASSWORD=fastapi_pg_pw
@@ -30,12 +30,20 @@ services:
     image: traefik:latest
     ports:
       - "80:80"
-      - "8080:8080" # Web UI (enabled by --api.insecure=true)
+    #  - "8080:8080" # Web UI (enabled by --api.insecure=true)
     depends_on:
       - db
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./src/traefik/traefik.dev.toml:/etc/traefik/traefik.toml"
 
+  frontend:
+    build: ./src/frontend
+    volumes:
+      - "./src/frontend:/app"
+      - "/app/node_modules"
+    ports:
+      - "8080:8080"
+      
 volumes:
   postgres_data:
