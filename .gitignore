@@ -3,3 +3,4 @@ src/app/api/__pycache__/
 src/tests/__pycache__/
 /.pytest_cache/
 src/.pytest_cache/
+src/frontend/node_modules/
