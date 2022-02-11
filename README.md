@@ -10,6 +10,8 @@ Please note: This repository has public access in order to show the process and 
 
 - For the CI pipeline I am using Docker, Pytest, Github Actions and AWS ECR.
 
-- For the web API I am using FastAPI, Traefik, Postgres and SQLAlchemy.
+- For the backend I am using FastAPI, Traefik, Postgres and SQLAlchemy.
 
 - The app has implemented the standard CRUD routes GET, POST, PUT and DELETE for a notes table.
+
+- Currently under development: frontend with Vue.js and axios
