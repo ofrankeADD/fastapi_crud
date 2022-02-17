@@ -24,11 +24,15 @@ Currently in development mode:
  `docker-compose -f docker-compose.dev.yaml up -d --build`
  
  API Routes:
+ 
  `http://localhost:8432/notes/{id}/`
+ 
  `http://localhost:8432/items/{id}/`
  
  Swagger UI:
+ 
  `http://localhost:8432/docs`
  
  Frontend:
+ 
 `http://localhost:8080`
