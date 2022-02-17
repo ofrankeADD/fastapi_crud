@@ -15,3 +15,20 @@ Please note: This repository has public access in order to show the process and 
 - The app has implemented the standard CRUD routes GET, POST, PUT and DELETE for a notes table.
 
 - Currently under development: frontend with Vue.js and axios
+
+
+## Building and running the Docker container:
+
+Currently in development mode:
+
+ `docker-compose -f docker-compose.dev.yaml up -d --build`
+ 
+ API Routes:
+ `https://localhost:8432/notes/{id}/`
+ `https://localhost:8432/items/{id}/`
+ 
+ Swagger UI:
+ `https://localhost:8432/docs`
+ 
+ Frontend:
+`https://localhost:8080`
