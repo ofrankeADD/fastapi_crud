@@ -38,3 +38,7 @@ Swagger UI:
 Frontend entrypoint:
  
 `http://localhost:8080/`
+
+## Unittests:
+
+`docker-compose -f docker-compose.dev.yml exec -T backend pytest .`
