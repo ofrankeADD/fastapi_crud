@@ -21,18 +21,20 @@ Please note: This repository has public access in order to show the process and 
 
 Currently in development mode:
 
- `docker-compose -f docker-compose.dev.yaml up -d --build`
+`docker-compose -f docker-compose.dev.yaml up -d --build`
  
- API Routes:
+API Routes:
  
- `http://localhost:8432/notes/{id}/`
+`http://localhost:8432/notes/{id}/`
  
- `http://localhost:8432/items/{id}/`
+`http://localhost:8432/items/{id}/`
  
- Swagger UI:
+`http://localhost:8432/items/{id}?q={text}`
  
- `http://localhost:8432/docs`
+Swagger UI:
  
- Frontend:
+`http://localhost:8432/docs`
  
-`http://localhost:8080`
+Frontend entrypoint:
+ 
+`http://localhost:8080/`
