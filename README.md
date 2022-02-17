@@ -21,7 +21,7 @@ Please note: This repository has public access in order to show the process and 
 
 Currently in development mode:
 
-`docker-compose -f docker-compose.dev.yaml up -d --build`
+`docker-compose -f docker-compose.dev.yml up -d --build`
 
 ## Accessing the API:
 
