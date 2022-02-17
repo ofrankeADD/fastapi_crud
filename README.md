@@ -22,7 +22,9 @@ Please note: This repository has public access in order to show the process and 
 Currently in development mode:
 
 `docker-compose -f docker-compose.dev.yaml up -d --build`
- 
+
+## Accessing the API:
+
 API Routes:
  
 `http://localhost:8432/notes/{id}/`
