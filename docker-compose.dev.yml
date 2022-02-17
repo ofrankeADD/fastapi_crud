@@ -10,8 +10,10 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.fastapi.rule=Host(`fastapi.localhost`)"
+    env_file:
+      - .env
     environment:
-      - DATABASE_URL=postgresql://fastapi_pg_usr:fastapi_pg_pw@db/fastapi_pg_db
+      - $DATABASE_URL
     volumes:
       - ./src/backend/:/code/src/
 
@@ -19,10 +21,12 @@ services:
     image: postgres:14.1-alpine
     ports:
       - "5432:5432"
+    env_file:
+      - .env
     environment:
-      - POSTGRES_USER=fastapi_pg_usr
-      - POSTGRES_PASSWORD=fastapi_pg_pw
-      - POSTGRES_DB=fastapi_pg_db
+      - $POSTGRES_USER
+      - $POSTGRES_PASSWORD
+      - $POSTGRES_DB
     volumes:
       - postgres_data:/var/lib/postgresql/data/
       

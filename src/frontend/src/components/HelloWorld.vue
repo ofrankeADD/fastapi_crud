@@ -8,7 +8,8 @@
 import axios from 'axios';
 
 export default {
-  name: 'HelloWorld', data() {
+  name: 'HelloWorld', 
+  data() {
     return { msg: '', };
   },
   methods: { 
